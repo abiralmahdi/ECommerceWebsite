@@ -1,0 +1,157 @@
+{% extends 'layout.html' %}
+{% block body %}
+<!--Main layout-->
+<main class="">
+  <div class="container wow fadeIn">
+
+    <!-- Heading -->
+    <h2 class="my-5 h2 text-center">Cart Review and Checkout</h2>
+
+    <!--Grid row-->
+    <div class="row">
+
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+
+        <!--Card-->
+        <div class="card shadow">
+
+          <!--Card content-->
+          <form class="card-body" method='POST' action='/payment'>
+            {% csrf_token %}
+            <input type="hidden" class='form-control' name="purchaseDetails" id='purchaseDetails'>
+            <input type="hidden" class='form-control' name="totalPrice" id='totalPrice'>
+
+            <!--Grid row-->
+            <div class="row">
+
+              <!--Grid column-->
+              <div class="col-md-6 mb-2">
+
+                <!--firstName-->
+                <div class="md-form ">
+                  <input type="text" id="name" name='name' class="w-100 form-control" readonly value='{{user.first_name}}'>
+                  <label for="firstName" class="">Name</label>
+                </div>
+
+              </div>
+              <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <!--Username-->
+            <div class="md-form mb-5">
+              <input type="tel" class="form-control" name='contact' placeholder="Contact" value='{{contact}}' readonly>
+                <label for="email" class="">Contact</label>
+            </div>
+
+            <!--email-->
+            <div class="md-form mb-5">
+              <input type="text" id="email" name='email' class="form-control" placeholder="youremail@example.com" readonly
+                value='{{user.email}}'>
+              <label for="email" class="">Email</label>
+            </div>
+
+            <!--address-->
+            <div class="md-form mb-5">
+              <input type="text" id="address" name='address' class="form-control" value='{{address}}' readonly
+                placeholder="1234 Main St">
+              <label for="address" class="">Address</label>
+            </div>
+
+            <hr>
+
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" readonly id="same-address">
+              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing
+                address</label>
+            </div>
+
+            <hr>
+
+            <div class="d-block my-3">
+              <div class="custom-control custom-radio">
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <label class="custom-control-label" for="credit">Online Payment</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <label class="custom-control-label" for="debit">Cash on Delivery</label>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-dark bg-black btn-lg btn-block" type="submit">Place Order</button>
+
+          </form>
+
+        </div>
+        <!--/.Card-->
+
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+
+        <!-- Heading -->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+        </h4>
+
+        <!-- Cart -->
+        <ul class="list-group mb-3 z-depth-1 shadow bg-black rounded" id='items'>
+        </ul>
+        <!-- Cart -->
+
+        <!-- Promo code -->
+        <form class="card p-2 z-depth-1 bg-white">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code" aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-dark bg-black btn-md waves-effect m-0" type="button">Redeem</button>
+            </div>
+          </div>
+        </form>
+        <!-- Promo code -->
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+  </div>
+</main>
+{% endblock %}
+<!--Main layout-->
+{% block js %}
+<script>
+  if (localStorage.getItem('cart') == null) {
+    var cart = {}
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'))
+    totalPrice = JSON.parse(localStorage.getItem('totalPrice'))
+    document.getElementById('purchaseDetails').value = JSON.stringify(cart)
+    document.getElementById('totalPrice').value = totalPrice
+  }
+  console.log(cart)
+  for (item in cart) {
+    str = ` <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">${cart[item][1]}</h6>
+                <small class="text-muted">Quanity: ${cart[item][0]}</small>
+              </div>
+              <span class="text-muted">Tk. ${parseFloat(cart[item][2])*parseFloat(cart[item][0])}</span>
+            </li> `
+    $('#items').append(str)
+  }
+  str2 = `  <li class="list-group-item d-flex justify-content-between">
+              <span>Total (BDT)</span>
+              <strong>Tk. ${totalPrice}</strong>
+            </li>  `
+            
+$('#items').append(str2)
+</script>
+{% endblock %}

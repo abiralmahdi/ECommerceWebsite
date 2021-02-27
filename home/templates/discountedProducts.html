@@ -1,0 +1,376 @@
+{% extends 'layout.html' %}
+{% block body %} 
+
+{% block css %}
+<style>
+    a:hover{
+       text-decoration: none; 
+    }
+    .hov:hover{
+      background-color: initial;
+    }
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 88px;
+        left: 225px;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    #sidenav-btn{
+        top: 20%;
+        display: none;
+    }
+
+    .navv {
+        text-decoration: none;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    hr{
+        color: #818181;
+    }
+
+    .navv:hover {
+        color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    #navbtnlogin{
+        display: none;
+    }
+    #search-div{
+      margin-left: 38%;
+      width: 25%;
+    }
+    .subcatsclass{
+      border-radius: 5px;
+      
+    }
+    .subcatsclass:hover{
+      background-color: rgb(93, 131, 255);
+      transition: 0.25s;
+    }
+    
+    @media (max-width: 575.98px) {
+        #navbtnlogin {
+            display: flex;
+        }
+        #search-box{
+          display: none;
+        }
+        #search-btn{
+          display: none;
+        }
+        .sidenav{
+          left: 0;
+          top: 0
+        }
+        #sidenav-btn{
+          display: block;
+        }
+
+    #search-div{
+      margin-left: 25%;
+      width: 70%;
+    }
+    #nav22{
+        display: none;
+      }
+    }
+
+    @media (max-width: 457px) {
+      #add-student-btn {
+          margin-top: 10px;
+        }
+        #search-box{
+          display: none;
+        }
+        #search-btn{
+          display: none;
+        }
+    #search-div{
+      margin-left: 25%;
+      width: 60%;
+    }
+    .sidenav{
+          left: 0;
+          top: 0
+        }
+        #nav22{
+        display: none;
+      }
+      #sidenav-btn{
+          display: block;
+        }
+
+
+    }
+    @media (max-width: 770px) {
+      #search-div{
+      margin-left: 17%;
+      width: 70%;
+    }
+    .sidenav{
+          left: 0;
+          top: 0
+        }
+      #nav22{
+        display: none;
+      }
+      #sidenav-btn{
+          display: block;
+        }
+
+    }
+
+
+
+</style>
+{% endblock %}
+<button style="font-size:15px;cursor:pointer; border-radius: 30px;" onclick="navbarVisible()" class="mr-5 btn btn-dark fixed" id='sidenav-btn'><i class="fas fa-arrow-circle-right"></i></button>
+
+    <!-- the side navbar -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn text-light" onclick="closeNav()">&times;</a>
+        <hr>
+        <p class="my-3 ml-5 navv text-lg text-light" href="">{{category}}</p>
+        <hr>
+        {% for subcat in subcats %}
+        <a class="my-3 ml-5 navv" href="/products/sub-categories/{{category}}/{{subcat}}">{{subcat}}</a>
+        {% endfor %}
+        <hr>
+        <hr>
+    </div>
+    
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black" id='nav22'>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item mx-3">
+            <a class="nav-link">
+                <strong>Categories: </strong>
+            </a>
+          </li>
+
+          {% for i in subcats %}
+          <li class="nav-item mx-3 subcatsclass">
+              <a class="nav-link" href="/products/sub-categories/{{category}}/{{i.name}}">
+                  {{i.name}}
+              </a>
+            </li>
+          {% endfor %}
+          </ul>
+      </div>
+    </nav>
+
+
+
+
+    <div class="container mt-5">
+
+      <!--Section: Content-->
+      <section class="text-center">
+            <!-- Section heading -->
+            <h3 class="font-weight-bold mb-4 pb-2">Customer Reviews</h3>
+            <!-- Section description -->
+            <p class="text-black w-responsive mx-auto mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit fugit, error amet numquam iure provident voluptate esse quasi nostrum quisquam eum porro a pariatur veniam.</p>
+  
+          <div class="row">
+              <div class="col-md-4">
+                  <!-- Card -->
+                  <div class="card m-5 z-depth-2">
+  
+                      <!-- Card image -->
+                      <div class="view overlay">
+                          <img class="card-img-top"
+                              src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/shoes%20(8).jpg"
+                              alt="Card image cap">
+                          <a href="#!">
+                              <div class="mask rgba-white-slight"></div>
+                          </a>
+                      </div>
+  
+                      <!-- Card content -->
+                      <div class="card-body">
+  
+                          <p class="mb-1"><a href="" class="font-weight-bold black-text">Nike Football</a></p>
+  
+                          <p class="mb-1"><small class="mr-1"><s>$399</s></small><strong>$199</strong></p>
+  
+                          <div class="amber-text fa-xs mb-1">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star-half-alt"></i>
+                          </div>
+  
+                          <button type="button" class="btn btn-black btn-rounded btn-sm px-3">Buy Now</button>
+                          <button type="button"
+                              class="btn btn-outline-black btn-rounded btn-sm px-3 waves-effect">Details</button>
+  
+                      </div>
+  
+                  </div>
+                  <!-- Card -->
+              </div>
+          </div>
+      </section>
+      <!--Section: Content-->
+  
+  
+  </div>
+  
+
+      <script>
+        function navbarVisible() {
+            let nav = document.getElementById("mySidenav");
+            nav.style.width = "250px";
+        }
+
+
+        function closeNav() {
+            let nav = document.getElementById("mySidenav");
+            nav.style.width = "0px";
+        }
+
+
+        window.onscroll = function() {myFunction()};
+
+        var header = document.getElementById("mySidenav");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+          if (window.pageYOffset > sticky) {
+            header.classList.add("stickyy");
+          } else {
+            header.classList.remove("stickyy");
+          }
+        }
+
+
+      </script>
+
+{% endblock %}
+{% block js %}
+<script>
+
+  // Applicable for all
+  if (localStorage.getItem('cart') == null) {
+    var cart = {}
+    var totalPrice = 0
+  }
+  else {
+    cart = JSON.parse(localStorage.getItem('cart'))
+    totalPrice = localStorage.getItem('totalPrice')
+    updateCart(cart)
+  }
+
+  var sum = 0
+  for (var item in cart) {
+    sum = sum + cart[item][0]
+    try {
+      document.getElementById('div' + item).innerHTML = "<button class='btn btn-dark mt-3 disabled' style='cursor: not-allowed'>Added</button>";
+    }
+    catch (err) {
+      continue;
+    }
+  }
+
+  $('.cart').click(function () {
+    idstr = this.id.toString()
+    if (cart.hasOwnProperty(this.id.toString())) {
+      alert('This item already exists in your cart')
+    }
+    else {
+      qty = 1
+      name = document.getElementById('name' + idstr).innerHTML
+      price = parseFloat(document.getElementById('price' + idstr).innerHTML)
+      console.log(price)
+      img = document.getElementById('img' + idstr).src
+      // document.getElementById('div'+idstr).innerHTML = "<button class='btn btn-primary mt-3 disabled'>Added</button>";
+      cart[idstr] = [qty, name, price, qty * price, img, today, idstr]
+      totalPrice = 0
+      var sum = 0
+      for (var item in cart) {
+        sum = sum + cart[item][0]
+        try {
+          document.getElementById('div' + item).innerHTML = "<button class='btn btn-dark mt-3 disabled' style='cursor: not-allowed'>Added</button>";
+        }
+        catch (err) {
+          continue;
+        }
+      }
+
+      for (var i in cart) {
+        totalPrice += cart[i][3]
+      }
+      localStorage.setItem('totalPrice', totalPrice)
+      localStorage.setItem('cart', JSON.stringify(cart))
+      updatePopover(cart)
+      location.reload()
+
+    }
+  })
+
+  $('.divvpr').on("click", "button.minus", function () {
+    a = this.id.slice(8,);
+    // console.log(cart['pr' + a][0])
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    cart['pr' + a][3] = cart['pr' + a][0] * cart['pr' + a][2]
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    // console.log()
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr' + a][2]) * parseFloat(cart['pr' + a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+  $('.divvpr').on("click", "button.plus", function () {
+    a = this.id.slice(7,);
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    cart['pr' + a][3] = cart['pr' + a][0] * cart['pr' + a][2]
+
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr' + a][2]) * parseFloat(cart['pr' + a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+
+  $('.divvpr').on("click", "button.removeBtn", function () {
+    a = this.id.slice(8,)
+    itemm = 'pr' + a
+    delete cart[itemm]
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updatePopover(cart)
+    location.reload()
+  });
+
+</script>
+
+{% endblock %}

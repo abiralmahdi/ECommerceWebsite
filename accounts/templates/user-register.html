@@ -1,0 +1,129 @@
+{% extends 'layout3.html' %}
+{% block body %}
+
+{% block css %}
+
+<style>
+  .divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.divider-text span {
+    padding: 7px;
+    font-size: 12px;
+    position: relative;   
+    z-index: 2;
+}
+.divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 55%;
+    left: 0;
+    z-index: 1;
+}
+
+.btn-facebook {
+    background-color: #405D9D;
+    color: #fff;
+}
+</style>
+{% endblock %}
+
+<div class="container mt-5 ">
+        
+    <div class="card bg-white z-depth-2">
+    <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center"><strong>Create an Account</strong></h4>
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-white bg-danger alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% else %}
+        <div class="alert alert-dark bg-{{ message.tags }} alert-dismissible fade show" role="alert">
+          <strong>
+          {{ message }}
+          </strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    
+        <p>
+            <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
+        </p>
+        <p class="divider-text">
+            <span class="bg-light">OR</span>
+        </p>
+        <form action="/accounts/register" method="POST">
+            {% csrf_token %}
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+            <input name="uname" class="form-control" placeholder="Username" type="text" required>
+        </div> <!-- form-group// -->    
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+             </div>
+            <input name="fname" class="form-control" placeholder="First name" type="text" required>
+            <input name="lname" class="ml-2 form-control" placeholder="Last name" type="text" required>
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+             </div>
+            <input name="email" class="form-control" placeholder="Email address" type="email" required>
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+            </div>
+            <input name="contact" class="form-control" placeholder="Phone number" type="text" required>
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+             </div>
+            <input name="address" class="form-control" placeholder="Address" type="text" required>
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input class="form-control" name='password' placeholder="Create password" type="password" required>
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input class="form-control" name='c-password' placeholder="Repeat password" type="password" required>
+        </div> <!-- form-group// -->                                      
+        <div class="form-group">
+            <button type="submit" class="btn btn-dark btn-block"> Create Account  </button>
+        </div> <!-- form-group// -->      
+        <p class="text-center">Have an account? <a href="/accounts/login">Log In</a> </p>                                                                 
+    </form>
+    </article>
+    </div> <!-- card.// -->
+    
+    </div> 
+    <!--container end.//-->
+    
+    <br><br>
+
+
+
+{% endblock %}

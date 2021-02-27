@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="container">
+    <div class="container">
+        <p class="text-center h1 text-success mt-5">Your Order has been taken and payment has been completed successfully.
+            <br><a class="my-5 btn btn-primary btn-lg" href='/'>
+                Go to Home Page
+            </a>
+        </p>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    localStorage.clear()
+    cart = {}
+    totalPrice = 0
+</script>
+{% endblock %}
+{% endblock %}

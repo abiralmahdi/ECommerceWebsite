@@ -1,0 +1,6 @@
+//  1. Admin Panel Modification
+    2. User Dashboard Modification
+//  3. Best Selller Feature
+//  4. Indiv Product Customer Review
+    6. Cash on Delivery option to the purchase System
+//  7. Search results page modification (Add to cart functionality using JavaScript)

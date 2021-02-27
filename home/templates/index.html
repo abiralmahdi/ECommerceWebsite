@@ -1,0 +1,1112 @@
+{% extends 'layout.html' %}
+{% load multiply %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<style>
+  .carddd{
+    height: 200px
+  }
+</style>
+    <!-- Carousel wrapper -->
+    <div
+    id="carouselDarkVariant"
+    class="carousel slide carousel-fade carousel-dark"
+    data-mdb-ride="carousel"
+    >
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="0" class="active"></li>
+      <li data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="1"></li>
+      <li data-mdb-target="#carouselDarkVariant" data-mdb-slide-to="2"></li>
+    </ol>
+    
+    <!-- Inner -->
+    <div class="carousel-inner">
+      <div class="carousel-item c-item active">
+        <img
+          src="/media/{{advProds.0.image}}"
+          class="d-block w-100 h-50"
+          alt="..."
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{advProds.0.name}}</h5>
+          <p>{{advProds.0.caption}}</p>
+        </div>
+      </div>
+
+      {% for i in advProds|slice:"1:" %}
+      <div class="carousel-item c-item">
+        <img
+          src="/media/{{i.image}}"
+          class="d-block w-100 h-50"
+          alt="..."
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{i.name}}</h5>
+          <p>{{i.caption}}</p>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <!-- Inner -->
+    
+    <!-- Controls -->
+    <a
+      class="carousel-control-prev"
+      href="#carouselDarkVariant"
+      role="button"
+      data-mdb-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#carouselDarkVariant"
+      role="button"
+      data-mdb-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+    </div>
+    <!-- Carousel wrapper -->
+    
+    <div class="container mt-5">
+    
+    
+      <!--Section: Content-->
+      <section class="text-center">
+        
+        <!-- Section heading -->
+        <h3 class="font-weight-bold mb-4 pb-2 text-black">Our bestsellers</h3>
+        <!-- Section description -->
+        <p class="w-responsive mx-auto mb-5 text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit fugit, error amet numquam iure provident voluptate esse quasi nostrum quisquam eum porro a pariatur veniam.</p>
+    
+          <!-- Grid row -->
+        <div class="row">
+          {% for i in products|slice:"0:4" %}
+          <!-- Grid column -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <!-- Collection card -->
+            <div class="card collection-card  z-depth-2">
+              <!-- Card image -->
+              <div class="view zoom">
+                <img src="/media/{{i.image}}" class="img-fluid pb-5"
+                  alt="">
+                <div class="stripe dark">
+                  <a href='/products/{{i.category}}/{{i.id}}'>
+                    <p>{{i.product_name}}
+                      <i class="fas fa-angle-right"></i>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <!-- Card image -->
+            </div>
+            <!-- Collection card -->
+          </div>
+          <!-- Grid column -->
+          {% endfor %}
+        </div>
+        <!-- Grid row -->
+    
+      </section>
+      <!--Section: Content-->
+    
+    
+    </div>
+    
+    
+    <div class="container mt-5">
+    
+      <!-- Section -->
+      <section class="py-5">
+    
+        <h1 class="font-weight-bold mb-4 pb-2 text-center text-black">Our Product Categories</h1>
+    
+        <!-- Grid row -->
+        <div class="row">
+    
+          <!-- Grid column -->
+          <div class="col-md-6 col-lg-5 offset-lg-1">
+            {% for cat in catsHalfOne %}
+            <a href='/products/{{cat.slug}}'>
+              <div style='cursor: pointer;' class="view  z-depth-2 text-center m-2 white">
+                <h1 class="h1 p-3" style='font-family:fantasy'>{{cat.name}}</h1>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <!-- Grid column -->
+    
+          <!-- Grid column -->
+          <div class="col-md-6 col-lg-5">
+            {% for cat in catsHalfTwo %}
+            <a href='/products/{{cat.slug}}'>
+              <div class="view  z-depth-2 text-center m-2 white" style='cursor: pointer;'>
+                <h1 class="h1 p-3" style='font-family:fantasy'>{{cat.name}}</h1>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <!-- Grid column -->
+    
+        </div>
+        <!-- Grid row -->
+    
+      </section>
+      <!-- Section -->
+    
+    </div>
+    
+    
+    <!-- The categorized product -->
+    <div class="container my-5">
+    
+      <!-- Section: Block Content -->
+      <section>  
+        <div class="row mt-5 pt-5">
+    
+          <!-- New Products -->
+          <div class="col-lg-4 col-md-12">
+    
+            <h4 class="text-center font-weight-bold text-black mb-5">
+              <strong>New Arrivals</strong>
+            </h4>
+            
+            {% for newProd in latestProducts|slice:"0:3" %}
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="basicExampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+  
+              <div class="row">
+  
+                <div class="col-lg-6">
+  
+                  <!--Carousel Wrapper-->
+                  <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails"
+                    data-ride="carousel">
+  
+                    <!--Slides-->
+                    <div class="carousel-inner text-center text-md-left" role="listbox">
+                      <div class="carousel-item active">
+                        <img src="/media/{{newProd.image}}"
+                          alt="First slide" class="img-fluid" id='imgpr{{newProd.id}}'>
+                      </div>
+                    </div>
+                    <!--/.Slides-->
+    
+                  </div>
+                  <!--/.Carousel Wrapper-->
+  
+                </div>
+  
+                <div class="col-lg-5 text-center text-md-left">
+  
+                  <h2
+                    class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+                    <strong id="namepr{{newProd.id}}">{{newProd.product_name}}</strong>
+                  </h2>
+                  {% if newProd.presentPrice != newProd.price %}
+                  <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">{{newProd.discount}}% OFF</span>
+                  <span class="badge badge-success product mb-4 ml-xl-0 ml-4">new arrival</span>
+                  {% else %}
+                  <span class="badge badge-success product mb-4 ml-xl-0 ml-4">new arrival</span>
+                  {% endif %}
+                  <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                    <span class="red-text font-weight-bold">
+                      <strong>&#2547 <span id='pricepr{{newProd.id}}'>{{newProd.presentPrice}}</strong></strong>
+                    </span>
+                    {% if newProd.presentPrice == newProd.price %}
+                    <!-- <div class="container"></div> -->
+                    {% else %}
+                    <span class="grey-text">
+                      <small>
+                        <s>&#2547 {{newProd.price}}</s>
+                      </small>
+                    </span>
+                    {% endif %}
+                  </h3>
+  
+                  <!--Accordion wrapper-->
+                  <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+  
+                    <!-- Accordion card -->
+                    <div class="card">
+  
+                      <!-- Card header -->
+                      <div class="card-header" role="tab" id="headingOne1">
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                          aria-controls="collapseOne1">
+                          <h5 class="mb-0">
+                            Description
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                          </h5>
+                        </a>
+                      </div>
+  
+                      <!-- Card body -->
+                      <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+                        {{newProd.desc}}
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Accordion card -->
+  
+                    <!-- Accordion card -->
+                    <div class="card">
+  
+                      <!-- Card header -->
+                      <div class="card-header" role="tab" id="headingTwo2">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                          aria-expanded="false" aria-controls="collapseTwo2">
+                          <h5 class="mb-0">
+                            Reviews
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                          </h5>
+                        </a>
+                      </div>
+  
+                      <!-- Card body -->
+                      <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                          squid.
+                          3 wolf moon officia aute,
+                          non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                          wolf
+                          moon
+                          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Accordion card -->  
+                  </div>
+                  <!--/.Accordion wrapper-->
+  
+                  <!-- Add to Cart -->
+                  <section class="color">
+                    <div class="mt-5">
+                      <div class="row mt-3">
+                        <div class="d-flex text-center text-md-left text-md-right">
+                          <span id='divpr{{newProd.id}}' class='divpr'>
+                            <button class="btn btn-dark btn-rounded cart" id='pr{{newProd.id}}'>Add to cart</button>
+                          </span>
+                          <a class="btn btn-primary btn-rounded" href='/products/{{newProd.category}}/{{newProd.id}}'>Details</a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </section>
+                  <!-- /.Add to Cart -->
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+            <!-- Card -->
+            <a class="card carddd z-depth-0 mb-4" data-toggle="modal" data-target="#basicExampleModal{{forloop.counter}}">
+              <div class="card-body  z-depth-2">
+                <div class="row align-items-center">
+                  <div class="col-6 px-0">
+                    <img src="/media/{{newProd.image}}" class="img-fluid">
+                  </div>
+                  <div class="col-6">
+                    <p class="mb-0"><strong>{{newProd.product_name}}</strong></p>
+                    <span class="badge badge-success product ml-xl-0 ml-4">New Arrival</span>
+                    {% if newProd.presentPrice == newProd.price %}
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{newProd.presentPrice}}</strong></h6>
+                    {% else %}
+                    <span class="badge badge-danger product ml-xl-0 ml-4">{{newProd.discount}}% OFF</span>
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{newProd.presentPrice}}</strong></h6>
+                    <h6 class="h6-responsive dark-grey-text"><s>&#2547 {{newProd.price}}</s></h6>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <!-- Card -->
+
+            {% endfor %}
+
+            <p class='text-center'>
+              <button class="btn btn-dark btn-rounded">See more</button>
+            </p>
+          </div>
+          <!-- New Products -->
+    
+          <!-- Top Sellers -->
+          <div class="col-lg-4 col-md-12">
+    
+            <h4 class="text-center font-weight-bold  text-black mb-5">
+              <strong>Top Sellers</strong>
+            </h4>
+            {% for newProd in products|slice:"0:3" %}
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="basicExampleModallz{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                  
+                              <div class="row">
+                  
+                                <div class="col-lg-6">
+                  
+                                  <!--Carousel Wrapper-->
+                                  <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails"
+                                    data-ride="carousel">
+                  
+                                    <!--Slides-->
+                                    <div class="carousel-inner text-center text-md-left" role="listbox">
+                                      <div class="carousel-item active">
+                                        <img src="/media/{{newProd.image}}"
+                                          alt="First slide" class="img-fluid" id='imgpr{{newProd.id}}'>
+                                      </div>
+                                    </div>
+                                    <!--/.Slides-->
+                    
+                                  </div>
+                                  <!--/.Carousel Wrapper-->
+                  
+                                </div>
+                  
+                                <div class="col-lg-5 text-center text-md-left">
+                  
+                                  <h2
+                                    class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+                                    <strong id="namepr{{newProd.id}}">{{newProd.product_name}}</strong>
+                                  </h2>
+                                  {% if newProd.presentPrice != newProd.price %}
+                                  <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">{{newProd.discount}}% OFF</span>
+                                  <span class="badge badge-success product mb-4 ml-xl-0 ml-4">new arrival</span>
+                                  {% else %}
+                                  <span class="badge badge-success product mb-4 ml-xl-0 ml-4">new arrival</span>
+                                  {% endif %}
+                                  <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                                    <span class="red-text font-weight-bold">
+                                      <strong>&#2547 <span id='pricepr{{newProd.id}}'>{{newProd.presentPrice}}</strong></strong>
+                                    </span>
+                                    {% if newProd.presentPrice == newProd.price %}
+                                    <!-- <div class="container"></div> -->
+                                    {% else %}
+                                    <span class="grey-text">
+                                      <small>
+                                        <s>&#2547 {{newProd.price}}</s>
+                                      </small>
+                                    </span>
+                                    {% endif %}
+                                  </h3>
+                  
+                                  <!--Accordion wrapper-->
+                                  <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                  
+                                    <!-- Accordion card -->
+                                    <div class="card">
+                  
+                                      <!-- Card header -->
+                                      <div class="card-header" role="tab" id="headingOne1">
+                                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                                          aria-controls="collapseOne1">
+                                          <h5 class="mb-0">
+                                            Description
+                                            <i class="fas fa-angle-down rotate-icon"></i>
+                                          </h5>
+                                        </a>
+                                      </div>
+                  
+                                      <!-- Card body -->
+                                      <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                                        data-parent="#accordionEx">
+                                        <div class="card-body">
+                                        {{newProd.desc}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- Accordion card -->
+                  
+                                    <!-- Accordion card -->
+                                    <div class="card">
+                  
+                                      <!-- Card header -->
+                                      <div class="card-header" role="tab" id="headingTwo2">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                                          aria-expanded="false" aria-controls="collapseTwo2">
+                                          <h5 class="mb-0">
+                                            Reviews
+                                            <i class="fas fa-angle-down rotate-icon"></i>
+                                          </h5>
+                                        </a>
+                                      </div>
+                  
+                                      <!-- Card body -->
+                                      <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                                        data-parent="#accordionEx">
+                                        <div class="card-body">
+                                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                                          squid.
+                                          3 wolf moon officia aute,
+                                          non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                                          wolf
+                                          moon
+                                          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- Accordion card -->  
+                                  </div>
+                                  <!--/.Accordion wrapper-->
+                  
+                                  <!-- Add to Cart -->
+                                  <section class="color">
+                                    <div class="mt-5">
+                                      <div class="row mt-3">
+                                        <div class="d-flex text-center text-md-left text-md-right">
+                                          <span id='divpr{{newProd.id}}' class='divpr'>
+                                            <button class="btn btn-dark btn-rounded cart" id='pr{{newProd.id}}'>Add to cart</button>
+                                          </span>
+                                          <a class="btn btn-primary btn-rounded" href='/products/{{newProd.category}}/{{newProd.id}}'>Details</a>
+                                        </div>
+            
+                                      </div>
+                                    </div>
+                                  </section>
+                                  <!-- /.Add to Cart -->
+                  
+                                </div>
+                  
+                              </div>
+                  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            
+            <!-- Card -->
+            <a class="card carddd z-depth-0 mb-4" data-toggle="modal" data-target="#basicExampleModallz{{forloop.counter}}">
+              <div class="card-body  z-depth-2">
+                <div class="row align-items-center">
+                  <div class="col-6 px-0">
+                    <img src="/media/{{newProd.image}}" class="img-fluid">
+                  </div>
+                  <div class="col-6">
+                    <p class="mb-0"><strong>{{newProd.product_name}}</strong></p>
+                    <span class="badge badge-success product ml-xl-0 ml-4">Top seller</span>
+                    {% if newProd.presentPrice == newProd.price %}
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{newProd.presentPrice}}</strong></h6>
+                    {% else %}
+                    <span class="badge badge-danger product ml-xl-0 ml-4">{{newProd.discount}}% OFF</span>
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{newProd.presentPrice}}</strong></h6>
+                    <h6 class="h6-responsive dark-grey-text"><s>&#2547 {{newProd.price}}</s></h6>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <!-- Card -->
+            {% endfor %}
+            <p class='text-center'>
+              <button class="btn btn-dark btn-rounded">See more</button>
+            </p>
+    
+          </div>
+          <!-- Top Sellers -->
+    
+          <!-- Random Products -->
+          <div class="col-lg-4 col-md-12">
+    
+            <h4 class="text-center font-weight-bold text-black mb-5">
+              <strong>Discounts and Offers</strong>
+            </h4>
+
+            {% for discProd in discProds|slice:"0:3" %}
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="discProdModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+  
+              <div class="row">
+  
+                <div class="col-lg-6">
+  
+                  <!--Carousel Wrapper-->
+                  <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails"
+                    data-ride="carousel">
+  
+                    <!--Slides-->
+                    <div class="carousel-inner text-center text-md-left" role="listbox">
+                      <div class="carousel-item active">
+                        <img src="/media/{{discProd.image}}"
+                          alt="First slide" class="img-fluid">
+                      </div>
+                    </div>
+                    <!--/.Slides-->
+    
+                  </div>
+                  <!--/.Carousel Wrapper-->
+  
+                </div>
+  
+                <div class="col-lg-5 text-center text-md-left">
+  
+                  <h2
+                    class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+                    <strong>{{discProd.product_name}}</strong>
+                  </h2>
+                  <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">{{discProd.discountPercentage}}% OFF</span>
+                  <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                    <span class="red-text font-weight-bold">
+                      <strong>&#2547 {{discProd.presentPrice}}</strong>
+                    </span>
+                    {% if discProd.presentPrice == discProd.price %}
+                    <!-- <div class="container"></div> -->
+                    {% else %}
+                    <span class="grey-text">
+                      <small>
+                        <s>{{discProd.price}}</s>
+                      </small>
+                    </span>
+                    {% endif %}
+                  </h3>
+  
+                  <!--Accordion wrapper-->
+                  <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+  
+                    <!-- Accordion card -->
+                    <div class="card">
+  
+                      <!-- Card header -->
+                      <div class="card-header" role="tab" id="headingOne1">
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                          aria-controls="collapseOne1">
+                          <h5 class="mb-0">
+                            Description
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                          </h5>
+                        </a>
+                      </div>
+  
+                      <!-- Card body -->
+                      <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+                        {{discProd.desc}}
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Accordion card -->
+  
+                    <!-- Accordion card -->
+                    <div class="card">
+  
+                      <!-- Card header -->
+                      <div class="card-header" role="tab" id="headingTwo2">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                          aria-expanded="false" aria-controls="collapseTwo2">
+                          <h5 class="mb-0">
+                            Reviews
+                            <i class="fas fa-angle-down rotate-icon"></i>
+                          </h5>
+                        </a>
+                      </div>
+  
+                      <!-- Card body -->
+                      <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                          squid.
+                          3 wolf moon officia aute,
+                          non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                          wolf
+                          moon
+                          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Accordion card -->  
+                  </div>
+                  <!--/.Accordion wrapper-->
+  
+                  <!-- Add to Cart -->
+                  <section class="color">
+                    <div class="mt-5">
+                      <div class="row mt-3">
+                        <div class="d-flex text-center text-md-left text-md-right">
+                          <button class="btn btn-dark btn-rounded">
+                             Add to cart</button>
+                            <button class="btn btn-primary btn-rounded">Details</button>
+  
+                        </div>
+
+                      </div>
+                    </div>
+                  </section>
+                  <!-- /.Add to Cart -->
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+            <!-- Card -->
+            <a class="card carddd z-depth-0 mb-4" data-toggle="modal" data-target="#discProdModal{{forloop.counter}}">
+              <div class="card-body  z-depth-2">
+                <div class="row align-items-center">
+                  <div class="col-6 px-0">
+                    <img src="/media/{{discProd.image}}" class="img-fluid">
+                  </div>
+                  <div class="col-6">
+                    <p class="mb-0"><strong>{{discProd.product_name}}</strong></p>
+                    {% if discProd.presentPrice == discProd.price %}
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{discProd.presentPrice}}</strong></h6>
+                    {% else %}
+                    <span class="badge badge-danger product ml-xl-0 ml-4">{{discProd.discountPercentage}}% OFF</span>
+                    <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>&#2547 {{discProd.presentPrice}}</strong></h6>
+                    <h6 class="h6-responsive dark-grey-text"><s>&#2547 {{discProd.price}}</s></h6>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <!-- Card -->
+            {% endfor %}
+            <p class='text-center'>
+              <button class="btn btn-dark btn-rounded">See more</button>
+            </p>
+    
+          </div>
+          <!-- Random Products -->
+    
+        </div>
+    
+      </section>
+      <!-- Section: Block Content -->
+    
+    </div>
+
+
+
+      <div class="container mt-5  text-black">
+
+
+        <!--Section: Content-->
+        <section class=" text-black text-center">
+          
+          <!-- Section heading -->
+          <h3 class="font-weight-bold mb-4 pb-2">Customer Reviews</h3>
+          <!-- Section description -->
+          <p class="text-black w-responsive mx-auto mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit fugit, error amet numquam iure provident voluptate esse quasi nostrum quisquam eum porro a pariatur veniam.</p>
+      
+            <!-- Carousel Wrapper -->
+          <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+            <!-- Controls -->
+            <!-- <div class="controls-top">
+              <a class="btn-floating primary-color waves-effect waves-light" href="#multi-item-example" data-slide="prev">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+              <a class="btn-floating primary-color waves-effect waves-light" href="#multi-item-example" data-slide="next">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            </div> -->
+            <!-- Controls -->
+            <!-- Indicators -->
+            <ol class="carousel-indicators mb-n3">
+              <li class="primary-color active" data-target="#multi-item-example" data-slide-to="0"></li>
+              <li class="primary-color" data-target="#multi-item-example" data-slide-to="1"></li>
+              <li class="primary-color" data-target="#multi-item-example" data-slide-to="2"></li>
+            </ol>
+            <!-- Indicators -->
+            <!-- Slides -->
+            <div class="carousel-inner" role="listbox">
+              <!-- First slide -->
+              <div class="carousel-item active">
+                {% for i in contact|slice:"0:3" %}
+                <div class="col-md-4 mb-2">
+                  <!-- Card -->
+                  <div class="card carddd card-cascade narrower z-depth-2 card-ecommerce">
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade text-center">
+                      <!-- Category & Title -->
+                      <a href="" class="text-muted">
+                        <h5>Valued Customer</h5>
+                      </a>
+                      <h4 class="card-title my-4">
+                        <strong>
+                          <a href="">{{i.name}}</a>
+                        </strong>
+                      </h4>
+                      <!-- Card footer -->
+                      <div class="card-footer px-1">
+                        <p class="card-text">{{i.message}}
+                        </p>  
+                      </div>
+                    </div>
+                    <!-- Card content -->
+                  </div>
+                  <!-- Card -->
+                </div>
+                {% endfor %}
+              </div>
+              <!-- First slide -->
+              <!-- Second slide -->
+              <div class="carousel-item">
+                {% for i in contact|slice:"3:6" %}
+                <div class="col-md-4 mb-2">
+                  <!-- Card -->
+                  <div class="card carddd card-cascade narrower z-depth-2 card-ecommerce">
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade text-center">
+                      <!-- Category & Title -->
+                      <a href="" class="text-muted">
+                        <h5>Valued Customer</h5>
+                      </a>
+                      <h4 class="card-title my-4">
+                        <strong>
+                          <a href="">{{i.name}}</a>
+                        </strong>
+                      </h4>
+                      <!-- Card footer -->
+                      <div class="card-footer px-1">
+                        <p class="card-text">{{i.message}}
+                        </p>  
+                      </div>
+                    </div>
+                    <!-- Card content -->
+                  </div>
+                  <!-- Card -->
+                </div>
+                {% endfor %}
+              </div>
+              <!-- Second slide -->
+              <!--Third slide -->
+              <div class="carousel-item">
+                {% for i in contact|slice:"6:9" %}
+                <div class="col-md-4 mb-2">
+                  <!-- Card -->
+                  <div class="card carddd card-cascade narrower z-depth-2 card-ecommerce">
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade text-center">
+                      <!-- Category & Title -->
+                      <a href="" class="text-muted">
+                        <h5>Valued Customer</h5>
+                      </a>
+                      <h4 class="card-title my-4">
+                        <strong>
+                          <a href="">{{i.name}}</a>
+                        </strong>
+                      </h4>
+                      <!-- Card footer -->
+                      <div class="card-footer px-1">
+                        <p class="card-text">{{i.message}}
+                        </p>  
+                      </div>
+                    </div>
+                    <!-- Card content -->
+                  </div>
+                  <!-- Card -->
+                </div>
+                {% endfor %}
+              </div>
+              <!--Third slide -->
+            </div>
+            <!-- Slides -->
+          </div>
+          <!-- Carousel Wrapper -->
+      
+        </section>
+        <!--Section: Content-->
+      
+      
+      </div>
+
+
+<!-- COntact form -->
+<div class="container my-5 py-5 z-depth-2 white">
+
+
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center text-lg-left  text-black">
+  
+      <style>
+        .map-container {
+          height: 280px;
+          position: relative;
+        }
+  
+        .map-container iframe {
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+        }
+      </style>
+  
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
+  
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+  
+          <h3 class="font-weight-bold text-black">Contact Us</h3>
+  
+          <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id quam sapiente
+            molestiae.</p>
+  
+        </div>
+        <!--Grid column-->
+  
+      </div>
+      <!--Grid row-->
+  
+      <!--Grid row-->
+      <form class="row" action='/contact-us' id='contact' method='POST'>
+        {% csrf_token %}
+        <!--Grid column-->
+        <div class="col-lg-5 col-md-12 mb-0 mb-md-0">
+  
+          <!--Google map-->
+          <div id="map-container-google-1" class="z-depth-1 map-container mb-4">
+            <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+              style="border:0" allowfullscreen></iframe>
+          </div>
+          <!--Google Maps-->
+  
+        </div>
+        <!--Grid column-->
+  
+        <!--Grid column-->
+        <div class="col-lg-7 col-md-12 mb-4 mb-md-0">
+
+          <!-- Material outline input -->
+          <div class="md-form md-outline mt-3">
+            <input type="text" id="form-name" name='name' class="form-control">
+            <label for="form-name">Name</label>
+          </div>
+          
+          <!-- Material outline input -->
+          <div class="md-form md-outline mt-3">
+            <input type="email" id="form-email" name='email' class="form-control">
+            <label for="form-email">E-mail</label>
+          </div>
+  
+          <!-- Material outline input -->
+          <div class="md-form md-outline">
+            <input type="tel" id="form-contact" name='contact' class="form-control">
+            <label for="form-subject">Contact</label>
+          </div>
+  
+          <!--Material textarea-->
+          <div class="md-form md-outline mb-3">
+            <textarea id="form-message" name='message' class="md-textarea form-control" rows="3"></textarea>
+            <label for="form-message">Your Message</label>
+          </div>
+  
+          <button type="submit" class="btn btn-dark btn-lg btn-sm ml-0">Submit<i class="far fa-paper-plane ml-2"></i></button>
+  
+        </div>
+        <!--Grid column-->
+  
+      </form>
+      <!--Grid row-->
+  
+  
+    </section>
+    <!--Section: Content-->
+  
+  
+  </div>
+  
+
+{% endblock %}    
+
+{% block js %}
+<script>
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = dd + '/' + mm + '/' + yyyy;
+
+  if (localStorage.getItem('cart') == null){
+    var cart = {}
+    var totalPrice = 0
+  }
+  else{
+    cart = JSON.parse(localStorage.getItem('cart'))
+    totalPrice = localStorage.getItem('totalPrice')
+    updateCart(cart)
+  }
+  $('.cart').click(function(){
+    idstr = this.id.toString()
+
+    if (cart[idstr] != undefined){
+      alert('This item already exists in your cart')
+    }
+    else{
+      qty = 1
+      name = document.getElementById('name'+idstr).innerHTML
+      price = parseFloat(document.getElementById('price'+idstr).innerHTML)
+      img = document.getElementById('img'+idstr).src
+      cart[idstr] = [qty, name, price, qty*price, img, today, idstr]
+      document.getElementById('cart').innerHTML = 0
+    }
+    updateCart(cart)
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart))
+    location.reload()
+  })
+
+  function updateCart(cart) {
+    var sum = 0
+    
+    for (var item in cart) {
+      sum = sum + cart[item][0]
+      try {
+        document.getElementById('div' + item).innerHTML = "<button class='btn btn-dark btn-rounded disabled' style='cursor: not-allowed'>Added</button>";
+      }
+      catch (err){
+        continue;
+      }
+      }
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = "<b>"+ Object.keys(cart).length;+"</b>"
+    console.log(document.getElementById('cart').innerHTML)
+    updatePopover(cart)
+}
+// IF plus or minus button is clicked, change the qty [FOR THE MODAL CART]
+$('.divvpr').on("click", "button.minus", function() {
+    a = this.id.slice(8, );
+    // console.log(cart['pr' + a][0])
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    cart['pr' + a][3] = cart['pr' + a][0]*cart['pr' + a][2]
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(document.getElementById('pricepr'+a).innerHTML)*parseFloat(cart['pr'+a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+});
+$('.divvpr').on("click", "button.plus", function() {
+    a = this.id.slice(7, );
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    cart['pr' + a][3] = cart['pr' + a][0]*cart['pr' + a][2]
+
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    try{
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(document.getElementById('pricepr'+a).innerHTML)*parseFloat(cart['pr'+a][0]);
+    }
+    catch(err){
+      a = 3
+    }
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+});
+
+$('.divvpr').on("click", "button.removeBtn", function() {
+  a = this.id.slice(8, )
+    itemm = 'pr' + a
+    delete cart[itemm]
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updatePopover(cart)
+    location.reload()
+});
+
+// function updatePopover(cart) {
+//     totPrice = localStorage.getItem('totalPrice')
+//     var popStr = "";
+//     popStr = popStr + "<h5 class='h4 font-weight-bold'>There are "+ Object.keys(cart).length +" items in your cart</h5><div class='mx-2 my-2'>";
+//     var i = 1;
+//     for (var item in cart){
+//         popStr = popStr + `<div class='card divvpr shadow-lg  rounded' style='width: 100%;'>
+//                             <div class='row no-gutters'>
+//                               <div class='col-sm-5'>
+//                               <img class='card-img' src='`+ document.getElementById('img'+item).src +`'>
+//                               </div>
+//                               <div class='col-sm-7'>
+//                                 <div class='card-body cart-items'>
+//                                   <h5 class='card-title'><b>`+ document.getElementById('name'+item).innerHTML +`</b></h5>
+//                                   <p class='card-text cart-text'>
+//                                     <p><b>Individual Price: </b>`+ document.getElementById('price'+item).innerHTML +`</p>
+//                                     <p class='mb-2'><b>Total Price: </b> Tk. <span id='totPrice`+ item +`'>` + parseFloat(document.getElementById('price'+item).innerHTML)*parseFloat(cart[item][0]) + `</span></p>
+//                                     <button class='btn btn-dark btn-sm removeBtn' id='remove`+ item +`'>Remove</button>
+                                    
+//                                     <button class='minus bg-dark' id='minuss`+ item +`'><i class="fas fa-minus" style='color:white'></i></button>
+//                                     <span id='vall`+ item +`'>`+ cart[item][0] +`</span>
+//                                     <button class='plus bg-dark' id='pluss`+ item +`'><i class="fas fa-plus" style='color:white'></i></button>
+//                                   </p>
+//                                 </div>
+//                               </div>
+//                             </div>
+//                             </div>
+//                             `
+//         i = i+1;
+//       }
+//     popStr = popStr + "</div>" 
+//     document.getElementById('popcart').innerHTML =  popStr;
+//     $('#popcart').popover('show');
+// }
+
+
+</script>
+{% endblock %}

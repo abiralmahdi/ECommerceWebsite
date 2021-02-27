@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+{% block title %}All Products{% endblock %}
+{% block body %}
+<style>
+  .cardd{
+    height: 400px;
+  }
+</style>
+<div class="container mt-5">
+
+    <!--Section: Content-->
+    <section class="text-center">
+          <!-- Section heading -->
+          <h3 class="font-weight-bold mb-4 pb-2">Customer Reviews</h3>
+          <!-- Section description -->
+          <p class="text-black w-responsive mx-auto mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit fugit, error amet numquam iure provident voluptate esse quasi nostrum quisquam eum porro a pariatur veniam.</p>
+
+        <div class="row">
+          {% for prod in products %}
+            <div class="col-md-3">
+                
+                <!-- Card -->
+                <div class="card cardd m-1 mb-5 z-depth-2">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <img class="card-img-top"
+                            src="/media/{{prod.image}}"
+                            alt="Card image cap"
+                            id='imgpr{{prod.id}}'>
+                        <a href="/products/{{prod.category}}/{{prod.id}}">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <p class="mb-1"><a href="" class="font-weight-bold black-text" id='namepr{{prod.id}}'>{{prod.product_name}}</a></p>
+                        {% if prod.price == prod.presentPrice %}
+                        <p class="mb-1"><strong>&#2547<span id='pricepr{{prod.id}}'>{{prod.presentPrice}}</span></strong></p>
+                        {% else %}
+                        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">{{prod.discount}}% OFF</span>
+                        <p class="mb-1"><small class="mr-1"><s>&#2547 {{prod.price}}</s></small><strong>&#2547 <span id='pricepr{{prod.id}}'>{{prod.presentPrice}}</span></strong></p>
+                        {% endif %}
+                        <span id='divpr{{prod.id}}' class='divpr'>
+                          <button type="button" class="btn btn-black btn-rounded btn-sm px-3 cart" id='pr{{prod.id}}'>Add to Cart</button>
+                        </span>
+                        <a type="button"
+                            class="btn btn-outline-black btn-rounded btn-sm px-3 waves-effect" href='/products/{{prod.category}}/{{prod.id}}'>Details</a>
+
+                    </div>
+
+                </div>
+                <!-- Card -->
+                
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!--Section: Content-->
+
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+  // Applicable for all
+  if (localStorage.getItem('cart') == null) {
+    var cart = {}
+    var totalPrice = 0
+  }
+  else {
+    cart = JSON.parse(localStorage.getItem('cart'))
+    totalPrice = localStorage.getItem('totalPrice')
+    updateCart(cart)
+  }
+
+  var sum = 0
+  for (var item in cart) {
+    sum = sum + cart[item][0]
+    try {
+        document.getElementById('div' + item).innerHTML = "<button class='btn btn-black btn-rounded btn-sm px-3 disabled' style='cursor: not-allowed'>Added</button>";
+    }
+    catch (err) {
+      continue;
+    }
+  }
+
+  $('.cart').click(function () {
+    idstr = this.id.toString()
+    if (cart.hasOwnProperty(this.id.toString())) {
+      alert('This item already exists in your cart')
+    }
+    else {
+      qty = 1
+      name = document.getElementById('name' + idstr).innerHTML
+      price = parseFloat(document.getElementById('price' + idstr).innerHTML)
+      console.log(price)
+      img = document.getElementById('img' + idstr).src
+      // document.getElementById('div'+idstr).innerHTML = "<button class='btn btn-primary mt-3 disabled'>Added</button>";
+      cart[idstr] = [qty, name, price, qty * price, img, today, idstr]
+      totalPrice = 0
+      var sum = 0
+      for (var item in cart) {
+        sum = sum + cart[item][0]
+        try {
+          document.getElementById('div' + item).innerHTML = "<button class='btn btn-dark btn-rounded btn-sm px-3 disabled' style='cursor: not-allowed'>Added</button>";
+        }
+        catch (err) {
+          continue;
+        }
+      }
+
+      for (var i in cart) {
+        totalPrice += cart[i][3]
+      }
+      localStorage.setItem('totalPrice', totalPrice)
+      localStorage.setItem('cart', JSON.stringify(cart))
+      updatePopover(cart)
+      location.reload()
+
+    }
+  })
+
+  $('.divvpr').on("click", "button.minus", function () {
+    a = this.id.slice(8,);
+    // console.log(cart['pr' + a][0])
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    cart['pr' + a][3] = cart['pr' + a][0] * cart['pr' + a][2]
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    // console.log()
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr' + a][2]) * parseFloat(cart['pr' + a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+  $('.divvpr').on("click", "button.plus", function () {
+    a = this.id.slice(7,);
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    cart['pr' + a][3] = cart['pr' + a][0] * cart['pr' + a][2]
+
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr' + a][2]) * parseFloat(cart['pr' + a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+
+  $('.divvpr').on("click", "button.removeBtn", function () {
+    a = this.id.slice(8,)
+    itemm = 'pr' + a
+    delete cart[itemm]
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updatePopover(cart)
+    location.reload()
+  });
+
+</script>
+
+{% endblock %}

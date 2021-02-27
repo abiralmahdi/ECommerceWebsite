@@ -1,0 +1,584 @@
+{% load multiply %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %} - Imperia Computer Store</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/css/mdb.min.css">
+  <link rel="stylesheet"
+    href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-addons-4.19.2.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
+  <!-- w3 schools css -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- animate css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- custom styles -->
+  <style>
+    .c-item {
+      height: 400px;
+    }
+
+    .c-item img {
+      position: absolute;
+      object-fit: cover;
+      height: 100% !important;
+      width: 100% !important;
+      min-height: 400px;
+    }
+
+    .navbar .navbar-brand img {
+      height: 20px;
+    }
+
+    .navbar .navbar-brand {
+      padding-top: 0;
+    }
+
+    .navbar .button-collapse {
+      padding-top: 1px;
+    }
+
+    .card-intro .card-body {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-radius: 0 !important;
+    }
+
+    .card-intro .card-body h1 {
+      margin-bottom: 0;
+    }
+
+    .card-intro {
+      margin-top: 64px;
+    }
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display: none; }
+	.navbar .nav-item:hover .nav-link{ color: #fff;  }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}	
+/* ============ desktop view .end// ============ */
+
+    @media (max-width: 450px) {
+      .card-intro {
+        margin-top: 56px;
+      }
+    }
+
+    @media (min-width: 1441px) {
+      .card-intro {
+        padding-left: 0 !important;
+      }
+    }
+  </style>
+</head>
+
+<body class=''>
+
+
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark black z-depth-2">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand waves-effect" href="/">
+        <img src="https://mdbootstrap.com/wp-content/uploads/2018/06/logo-mdb-jquery-small.png" alt="Logo">
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item mx-2">
+            <a class="nav-link waves-effect" href="/">Home</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/angular/">About</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link waves-effect" href="/#contact">Contact</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <form action="/search" class="form-inline" method='GET'>
+            <input type="text" class="form-control" placeholder='Search' name='search'>
+            <li class="nav-item">
+              <button class="nav-link waves-effect mr-2 btn btn-black" style='padding: 2px' type="submit">
+                <i class="fas fa-search mr-1"></i>
+              </button>
+            </li>
+            {% if user.is_authenticated and not user.is_superuser %}
+            <li class="nav-item">
+              <a href="/accounts/user-dashboard/{{user.username}}" class="nav-link btn btn-outline-light btn-sm btn-rounded waves-effect mr-2">
+                {{user.first_name}}
+              </a>
+            </li>
+            {% elif user.is_superuser %}
+            <li class="nav-item">
+              <a href="/accounts/adminPanel" class="nav-link btn btn-outline-light btn-sm btn-rounded waves-effect mr-2">
+                {{user.username}}
+              </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a href="/accounts/login" class="nav-link waves-effect mr-2">
+                <i class="fas fa-user-circle fa-lg"></i>
+              </a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <button class="nav-link btn btn-black waves-effect mr-2" type="button" style='padding:0' id='popcart-btn' data-mdb-toggle="modal" data-mdb-target="#popcartModal">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="badge" id='cart'>0</span>
+            </button>
+            </li>
+
+          </form>
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-5 z-depth-2">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarCenteredExample"
+        aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+        <!-- Left links -->
+        <ul class="navbar-nav row ">
+          <!-- Navbar dropdown -->
+          {% for cat in cats %}
+          <li class="nav-item dropdown col-1 font-weight-bold  bg-dark">
+            <button class="nav-link btn" id="navbarDropdown" role="button" data-mdb-toggle="dropdown"
+              aria-expanded="false">
+              {{cat.name}}
+            </button>
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu fadein" aria-labelledby="navbarDropdown">
+              {% for subcat in subcats|in_category:cat.slug %}
+              <li><a class="dropdown-item" href='/products/sub-categories/{{cat.slug}}/{{subcat.slug}}'>{{subcat.name}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+
+     <!-- Modal -->
+     <div class="modal fade" id='popcartModal' tabindex="-1" role="dialog" aria-labelledby="popcartLabel" aria-hidden="true" style='height: 95%;'>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">My Cart</h5>
+            <button type="button" class="close" data-mdb-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body overflow-y-auto" id="popcart">
+            Your Cart is empty
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick='clearCart()'>Clear Cart</button>
+            <button class="btn btn-dark bg-black" onclick='checkoutPageRedirect()'>Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>     
+    
+
+
+
+  {% block body %}{% endblock %}
+
+
+
+
+
+
+
+
+  <!-- Footer -->
+  <footer class="page-footer font-small bg-black">
+
+    <div>
+      <div class="container">
+
+        <!-- Grid row-->
+        <div class="row py-4 d-flex align-items-center">
+
+          <!-- Grid column -->
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0">Get connected with us on social networks!</h6>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+            <!-- Facebook -->
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+            <!-- Twitter -->
+            <a class="tw-ic">
+              <i class="fab fa-twitter white-text mr-4"> </i>
+            </a>
+            <!-- Google +-->
+            <a class="gplus-ic">
+              <i class="fab fa-google-plus-g white-text mr-4"> </i>
+            </a>
+            <!--Linkedin -->
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+            <!--Instagram-->
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row-->
+
+      </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left mt-5">
+
+      <!-- Grid row -->
+      <div class="row mt-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+          <!-- Content -->
+          <h6 class="text-uppercase font-weight-bold">Company name</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
+            consectetur
+            adipisicing elit.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <!-- Links -->
+          <h6 class="text-uppercase font-weight-bold">Products</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">MDBootstrap</a>
+          </p>
+          <p>
+            <a href="#!">MDWordPress</a>
+          </p>
+          <p>
+            <a href="#!">BrandFlow</a>
+          </p>
+          <p>
+            <a href="#!">Bootstrap Angular</a>
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <!-- Links -->
+          <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Your Account</a>
+          </p>
+          <p>
+            <a href="#!">Become an Affiliate</a>
+          </p>
+          <p>
+            <a href="#!">Shipping Rates</a>
+          </p>
+          <p>
+            <a href="#!">Help</a>
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+          <!-- Links -->
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <i class="fas fa-home mr-3"></i> New York, NY 10012, US
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> info@example.com
+          </p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> + 01 234 567 88
+          </p>
+          <p>
+            <i class="fas fa-print mr-3"></i> + 01 234 567 89
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/js/jquery.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/js/popper.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.19.2/js/mdb.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/bundles/4.19.2/compiled-addons.min.js"></script>
+  <script type="text/javascript"
+    src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
+
+
+
+
+<!-- cart features -->
+    <script>
+        $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
+
+
+
+
+        function clearCart() {
+          var cart = localStorage.getItem('cart')
+          var totalPrice = localStorage.getItem('totalPrice')
+          cart = {}
+          totalPrice = 0
+          localStorage.clear()
+          location.reload()
+        }
+    // Applicable to all
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = dd + '/' + mm + '/' + yyyy;
+
+  if (localStorage.getItem('cart') == null) {
+    var cart = {}
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'))
+    totalPrice = JSON.parse(localStorage.getItem('totalPrice'))
+  }
+  function checkoutPageRedirect(){
+      if (localStorage.getItem('cart') == null) {
+        alert('Please add items to your cart to proceed to checkout.')
+      }
+      else {
+        window.location.href = '/checkout'
+      }
+    }
+
+// var popStr = "";
+// popStr = popStr + "<h5 class='h4 font-weight-bold'>There are "+ Object.keys(cart).length +" items in your cart</h5><div class='mx-2 my-2'>";
+// var i = 1;
+// for (var item in cart){
+//         popStr = popStr + `<div class='card divvpr shadow-lg bg-black rounded' style='width: 100%;'>
+//                             <div class='row no-gutters'>
+//                               <div class='col-sm-5'>
+//                               <img class='card-img' src='`+ cart[item][4] +`'>
+//                               </div>
+//                               <div class='col-sm-7'>
+//                                 <div class='card-body cart-items'>
+//                                   <h5 class='card-title'>`+ cart[item][1] +`</h5>
+//                                   <p class='card-text cart-text'>
+//                                     <p><b>Individual Price: </b>`+ cart[item][2] +`</p>
+//                                     <p class='mb-2'><b>Total Price: </b> Tk. <span id='totPrice`+ item +`'>` + cart[item][3] + `</span></p>
+//                                     <button class='removeBtn btn btn-dark bg-black' id='remove`+item+`'>Remove</button>
+//                                     <button class='minus btn btn-dark bg-black mx-1' id='minuss`+ item +`'>-</button>
+//                                     <span id='vall`+ item +`'>`+ cart[item][0] +`</span>
+//                                     <button class='plus btn btn-dark bg-black mx-1' id='pluss`+ item +`'>+</button>
+//                                   </p>
+//                                 </div>
+//                               </div>
+//                             </div>
+//                             </div>
+//                             `
+
+//     i = i+1;
+//   }
+// popStr = popStr + "</div>" 
+// document.getElementById('popcart').innerHTML =  popStr;
+// $('#popcart').popover('show');
+
+$('.divvpr').on("click", "button.minus", function() {
+    a = this.id.slice(8, );
+    // console.log(cart['pr' + a][0])
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    cart['pr' + a][3] = cart['pr' + a][0]*cart['pr' + a][2]
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    // console.log()
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr'+a][2])*parseFloat(cart['pr'+a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+});
+$('.divvpr').on("click", "button.plus", function() {
+    a = this.id.slice(7, );
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    cart['pr' + a][3] = cart['pr' + a][0]*cart['pr' + a][2]
+
+    document.getElementById('vallpr' + a).innerHTML = cart['pr' + a][0];
+    document.getElementById('totPricepr' + a).innerHTML = parseFloat(cart['pr'+a][2])*parseFloat(cart['pr'+a][0]);
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+});
+
+$('.divvpr').on("click", "button.removeBtn", function() {
+    a = this.id.slice(8, )
+    itemm = 'pr' + a
+    delete cart[itemm]
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updatePopover(cart)
+    location.reload()
+});
+
+
+  function updateCart(cart) {
+    var sum = 0
+    for (var item in cart) {
+      sum = sum + cart[item][0]
+      // document.getElementById('div' + item).innerHTML = "<button class='btn btn-primary mt-3 disabled'>Added</button>";
+      }
+    totalPrice = 0
+    for (var i in cart) {
+      totalPrice += cart[i][3]
+    }
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log(document.getElementById('cart').innerHTML)
+    document.getElementById('cart').innerHTML = "<b>"+ Object.keys(cart).length;+"</b>"
+    updatePopover(cart)
+}
+
+
+function updatePopover(cart) {
+    var popStr = "";
+    popStr = popStr + "<h5 class='h4 font-weight-bold'>There are "+ Object.keys(cart).length +" items in your cart</h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart){
+        popStr = popStr + `<div class='card divvpr shadow-lg bg-white rounded' style='width: 100%;'>
+                            <div class='row no-gutters'>
+                              <div class='col-sm-5'>
+                              <img class='card-img' src='`+ cart[item][4] +`'>
+                              </div>
+                              <div class='col-sm-7'>
+                                <div class='card-body cart-items'>
+                                  <h5 class='card-title'><b>`+ cart[item][1] +`</b></h5>
+                                  <p class='card-text cart-text'>
+                                    <p><b>Individual Price: </b>`+ cart[item][2] +`</p>
+                                    <p class='mb-2'><b>Total Price: </b> Tk. <span id='totPrice`+ item +`'>` + cart[item][3] + `</span></p>
+                                    <button class='removeBtn btn btn-dark btn-sm btn-rounded bg-black' id='remove`+item+`'>Remove</button>
+                                    <button class='minus bg-dark' id='minuss`+ item +`'><i class="fas fa-minus" style='color:white'></i></button>
+                                    <span id='vall`+ item +`'>`+ cart[item][0] +`</span>
+                                    <button class='plus bg-dark' id='pluss`+ item +`'><i class="fas fa-plus" style='color:white'></i></button>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                            `
+        i = i+1;
+      }
+    popStr = popStr + "</div>" 
+    document.getElementById('popcart').innerHTML =  popStr;
+    $('#popcart').popover('show');
+}
+
+
+
+
+    </script>
+
+
+
+{% block js %}{% endblock %}
+
+</body>
+
+</html>
